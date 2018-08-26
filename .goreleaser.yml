@@ -2,8 +2,9 @@
 # .goreleaser.yml
 # Build customization
 builds:
-  - main: ./gobgp/
+  - main: ./cmd/gobgp/
     binary: gobgp
+    ldflags: -s -extldflags "-static"
     goos:
       - linux
     goarch:
@@ -12,8 +13,9 @@ builds:
       - arm
       - arm64
 
-  - main: ./gobgpd/
+  - main: ./cmd/gobgpd/
     binary: gobgpd
+    ldflags: -s -extldflags "-static"
     goos:
       - linux
     goarch:

@@ -42,6 +42,9 @@ from lib.base import (
     BGP_ATTR_TYPE_MP_REACH_NLRI,
     GRACEFUL_RESTART_TIME,
     LONG_LIVED_GRACEFUL_RESTART_TIME,
+    BGP_FSM_IDLE,
+    BGP_FSM_ACTIVE,
+    BGP_FSM_ESTABLISHED,
 )
 
 
@@ -105,7 +108,7 @@ class GoBGPContainer(BGPContainer):
 
     def _start_gobgp(self, graceful_restart=False):
         c = CmdBuffer()
-        c << '#!/bin/bash'
+        c << '#!/bin/sh'
         c << '/go/bin/gobgpd -f {0}/gobgpd.conf -l {1} -p {2} -t {3} > ' \
              '{0}/gobgpd.log 2>&1'.format(self.SHARED_VOLUME, self.log_level, '-r' if graceful_restart else '', self.config_format)
 
@@ -299,7 +302,14 @@ class GoBGPContainer(BGPContainer):
         return json.loads(self.local(cmd, capture=True))
 
     def get_neighbor_state(self, peer):
-        return self.get_neighbor(peer)['state']['session-state']
+        s = self.get_neighbor(peer)['state']['session_state']
+        if s == 1:
+            return BGP_FSM_IDLE
+        elif s == 3:
+            return BGP_FSM_ACTIVE
+        elif s == 6:
+            return BGP_FSM_ESTABLISHED
+        return "unknown"
 
     def clear_policy(self):
         self.policies = {}
@@ -562,8 +572,8 @@ class GoBGPContainer(BGPContainer):
 
     def reload_config(self):
         for daemon in self._get_enabled_quagga_daemons():
-            self.local('pkill {0} -SIGHUP'.format(daemon), capture=True)
-        self.local('pkill gobgpd -SIGHUP', capture=True)
+            self.local('pkill -SIGHUP {0}'.format(daemon), capture=True)
+        self.local('pkill -SIGHUP gobgpd', capture=True)
         self._wait_for_boot()
 
     def add_route(self, route, rf='ipv4', attribute=None, aspath=None,

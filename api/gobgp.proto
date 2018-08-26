@@ -21,64 +21,79 @@
 
 syntax = "proto3";
 
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+
 package gobgpapi;
 
 // Interface exported by the server.
 
 service GobgpApi {
-  rpc StartServer(StartServerRequest) returns (StartServerResponse) {}
-  rpc StopServer(StopServerRequest) returns (StopServerResponse) {}
-  rpc GetServer(GetServerRequest) returns (GetServerResponse) {}
-  rpc AddNeighbor(AddNeighborRequest) returns (AddNeighborResponse) {}
-  rpc DeleteNeighbor(DeleteNeighborRequest) returns (DeleteNeighborResponse) {}
-  rpc UpdateNeighbor(UpdateNeighborRequest) returns (UpdateNeighborResponse) {}
-  rpc GetNeighbor(GetNeighborRequest) returns (GetNeighborResponse) {}
-  rpc ResetNeighbor(ResetNeighborRequest) returns (ResetNeighborResponse) {}
-  rpc SoftResetNeighbor(SoftResetNeighborRequest) returns (SoftResetNeighborResponse) {}
-  rpc ShutdownNeighbor(ShutdownNeighborRequest) returns (ShutdownNeighborResponse) {}
-  rpc EnableNeighbor(EnableNeighborRequest) returns (EnableNeighborResponse) {}
-  rpc DisableNeighbor(DisableNeighborRequest) returns (DisableNeighborResponse) {}
-  rpc GetRib(GetRibRequest) returns (GetRibResponse) {}
-  rpc GetPath(GetPathRequest) returns (stream Path) {}
-  rpc ValidateRib(ValidateRibRequest) returns (ValidateRibResponse) {}
-  rpc AddPath(AddPathRequest) returns (AddPathResponse) {}
-  rpc DeletePath(DeletePathRequest) returns (DeletePathResponse) {}
-  rpc MonitorRib(MonitorRibRequest) returns (stream Destination) {}
-  rpc MonitorPeerState(Arguments) returns (stream Peer) {}
-  rpc EnableMrt(EnableMrtRequest) returns (EnableMrtResponse) {}
-  rpc DisableMrt(DisableMrtRequest) returns (DisableMrtResponse) {}
-  rpc InjectMrt(stream InjectMrtRequest) returns (InjectMrtResponse) {}
-  rpc AddBmp(AddBmpRequest) returns (AddBmpResponse) {}
-  rpc DeleteBmp(DeleteBmpRequest) returns (DeleteBmpResponse) {}
-  rpc GetRpki(GetRpkiRequest) returns (GetRpkiResponse) {}
-  rpc AddRpki(AddRpkiRequest) returns (AddRpkiResponse) {}
-  rpc DeleteRpki(DeleteRpkiRequest) returns (DeleteRpkiResponse) {}
-  rpc EnableRpki(EnableRpkiRequest) returns (EnableRpkiResponse) {}
-  rpc DisableRpki(DisableRpkiRequest) returns (DisableRpkiResponse) {}
-  rpc ResetRpki(ResetRpkiRequest) returns (ResetRpkiResponse) {}
-  rpc SoftResetRpki(SoftResetRpkiRequest) returns (SoftResetRpkiResponse) {}
-  rpc GetRoa(GetRoaRequest) returns (GetRoaResponse) {}
-  rpc EnableZebra(EnableZebraRequest) returns (EnableZebraResponse) {}
-  rpc AddVrf(AddVrfRequest) returns (AddVrfResponse) {}
-  rpc DeleteVrf(DeleteVrfRequest) returns (DeleteVrfResponse) {}
-  rpc GetVrf(GetVrfRequest) returns (GetVrfResponse) {}
-  rpc GetDefinedSet(GetDefinedSetRequest) returns (GetDefinedSetResponse) {}
-  rpc AddDefinedSet(AddDefinedSetRequest) returns (AddDefinedSetResponse) {}
-  rpc DeleteDefinedSet(DeleteDefinedSetRequest) returns (DeleteDefinedSetResponse) {}
-  rpc ReplaceDefinedSet(ReplaceDefinedSetRequest) returns (ReplaceDefinedSetResponse) {}
-  rpc GetStatement(GetStatementRequest) returns (GetStatementResponse) {}
-  rpc AddStatement(AddStatementRequest) returns (AddStatementResponse) {}
-  rpc DeleteStatement(DeleteStatementRequest) returns (DeleteStatementResponse) {}
-  rpc ReplaceStatement(ReplaceStatementRequest) returns (ReplaceStatementResponse) {}
-  rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {}
-  rpc AddPolicy(AddPolicyRequest) returns (AddPolicyResponse) {}
-  rpc DeletePolicy(DeletePolicyRequest) returns (DeletePolicyResponse) {}
-  rpc ReplacePolicy(ReplacePolicyRequest) returns (ReplacePolicyResponse) {}
-  rpc GetPolicyAssignment(GetPolicyAssignmentRequest) returns (GetPolicyAssignmentResponse) {}
-  rpc AddPolicyAssignment(AddPolicyAssignmentRequest) returns (AddPolicyAssignmentResponse) {}
-  rpc DeletePolicyAssignment(DeletePolicyAssignmentRequest) returns (DeletePolicyAssignmentResponse) {}
-  rpc ReplacePolicyAssignment(ReplacePolicyAssignmentRequest) returns (ReplacePolicyAssignmentResponse) {}
-  rpc GetRibInfo(GetRibInfoRequest) returns (GetRibInfoResponse) {}
+  rpc StartBgp(StartBgpRequest) returns (google.protobuf.Empty);
+  rpc StopBgp(StopBgpRequest) returns (google.protobuf.Empty);
+  rpc GetBgp(GetBgpRequest) returns (GetBgpResponse);
+
+  rpc AddPeer(AddPeerRequest) returns (google.protobuf.Empty);
+  rpc DeletePeer(DeletePeerRequest) returns (google.protobuf.Empty);
+  rpc ListPeer(ListPeerRequest) returns (stream ListPeerResponse);
+  rpc UpdatePeer(UpdatePeerRequest) returns (UpdatePeerResponse);
+  rpc ResetPeer(ResetPeerRequest) returns (google.protobuf.Empty);
+  rpc ShutdownPeer(ShutdownPeerRequest) returns (google.protobuf.Empty);
+  rpc EnablePeer(EnablePeerRequest) returns (google.protobuf.Empty);
+  rpc DisablePeer(DisablePeerRequest) returns (google.protobuf.Empty);
+  rpc MonitorPeer(MonitorPeerRequest) returns (stream MonitorPeerResponse);
+
+  rpc AddPeerGroup(AddPeerGroupRequest) returns (google.protobuf.Empty);
+  rpc DeletePeerGroup(DeletePeerGroupRequest) returns (google.protobuf.Empty);
+  rpc UpdatePeerGroup(UpdatePeerGroupRequest) returns (UpdatePeerGroupResponse);
+
+  rpc AddDynamicNeighbor(AddDynamicNeighborRequest) returns (google.protobuf.Empty);
+
+  rpc AddPath(AddPathRequest) returns (AddPathResponse);
+  rpc DeletePath(DeletePathRequest) returns (google.protobuf.Empty);
+  rpc ListPath(ListPathRequest) returns (stream ListPathResponse);
+  rpc AddPathStream(stream AddPathStreamRequest) returns (google.protobuf.Empty);
+
+  rpc GetTable(GetTableRequest) returns (GetTableResponse);
+  rpc MonitorTable(MonitorTableRequest) returns (stream MonitorTableResponse);
+
+  rpc AddVrf(AddVrfRequest) returns (google.protobuf.Empty);
+  rpc DeleteVrf(DeleteVrfRequest) returns (google.protobuf.Empty);
+  rpc ListVrf(ListVrfRequest) returns (stream ListVrfResponse);
+
+  rpc AddPolicy(AddPolicyRequest) returns (google.protobuf.Empty);
+  rpc DeletePolicy(DeletePolicyRequest) returns (google.protobuf.Empty);
+  rpc ListPolicy(ListPolicyRequest) returns (stream ListPolicyResponse);
+  rpc SetPolicies(SetPoliciesRequest) returns (google.protobuf.Empty);
+
+  rpc AddDefinedSet(AddDefinedSetRequest) returns (google.protobuf.Empty);
+  rpc DeleteDefinedSet(DeleteDefinedSetRequest) returns (google.protobuf.Empty);
+  rpc ListDefinedSet(ListDefinedSetRequest) returns (stream ListDefinedSetResponse);
+
+  rpc AddStatement(AddStatementRequest) returns (google.protobuf.Empty);
+  rpc DeleteStatement(DeleteStatementRequest) returns (google.protobuf.Empty);
+  rpc ListStatement(ListStatementRequest) returns (stream ListStatementResponse);
+
+  rpc AddPolicyAssignment(AddPolicyAssignmentRequest) returns (google.protobuf.Empty);
+  rpc DeletePolicyAssignment(DeletePolicyAssignmentRequest) returns (google.protobuf.Empty);
+  rpc ListPolicyAssignment(ListPolicyAssignmentRequest) returns (stream ListPolicyAssignmentResponse);
+  rpc SetPolicyAssignment(SetPolicyAssignmentRequest) returns (google.protobuf.Empty);
+
+  rpc AddRpki(AddRpkiRequest) returns (google.protobuf.Empty);
+  rpc DeleteRpki(DeleteRpkiRequest) returns (google.protobuf.Empty);
+  rpc ListRpki(ListRpkiRequest) returns (stream ListRpkiResponse);
+  rpc EnableRpki(EnableRpkiRequest) returns (google.protobuf.Empty);
+  rpc DisableRpki(DisableRpkiRequest) returns (google.protobuf.Empty);
+  rpc ResetRpki(ResetRpkiRequest) returns (google.protobuf.Empty);
+  rpc ListRpkiTable(ListRpkiTableRequest) returns (stream ListRpkiTableResponse);
+
+  rpc EnableZebra(EnableZebraRequest) returns (google.protobuf.Empty);
+
+  rpc EnableMrt(EnableMrtRequest) returns (google.protobuf.Empty);
+  rpc DisableMrt(DisableMrtRequest) returns (google.protobuf.Empty);
+
+  rpc AddBmp(AddBmpRequest) returns (google.protobuf.Empty);
+  rpc DeleteBmp(DeleteBmpRequest) returns (google.protobuf.Empty);
 }
 
 // Constants for address families
@@ -107,20 +122,106 @@ enum Family {
   OPAQUE = 1074594033;
 }
 
-message GetNeighborRequest {
-  bool enableAdvertised = 1;
-  string address        = 2;
+message StartBgpRequest {
+  Global global = 1;
 }
 
-message GetNeighborResponse {
-  repeated Peer peers = 1;
+message StopBgpRequest {
 }
 
-message Arguments {
-  Resource resource = 1;
-  uint32 family = 2;
-  string name = 3;
-  bool current = 4;
+message GetBgpRequest {
+}
+
+message GetBgpResponse {
+  Global global = 1;
+}
+
+message AddPeerRequest {
+  Peer peer = 1;
+}
+
+message DeletePeerRequest {
+  string address = 1;
+  string interface = 2;
+}
+
+message ListPeerRequest {
+  string address        = 1;
+  bool enableAdvertised = 2;
+}
+
+message ListPeerResponse {
+  Peer peer = 1;
+}
+
+message UpdatePeerRequest {
+  Peer peer = 1;
+  // Calls SoftResetIn after updating the peer configuration if needed.
+  bool do_soft_reset_in = 2;
+}
+
+message UpdatePeerResponse {
+  // Indicates whether calling SoftResetIn is required due to this update. If
+  // "true" is set, the client should call SoftResetIn manually. If
+  // "do_soft_reset_in = true" is set in the request, always returned with
+  // "false".
+  bool needs_soft_reset_in = 1;
+}
+
+message ResetPeerRequest {
+  string address = 1;
+  string communication = 2;
+  bool soft = 3;
+  enum SoftResetDirection {
+    IN = 0;
+    OUT = 1;
+    BOTH = 2;
+  }
+  SoftResetDirection direction = 4;
+}
+
+message ShutdownPeerRequest {
+  string address = 1;
+  string communication = 2;
+}
+
+message EnablePeerRequest {
+  string address = 1;
+}
+
+message DisablePeerRequest {
+  string address = 1;
+  string communication = 2;
+}
+
+message MonitorPeerRequest {
+  string address = 1;
+  bool current = 2;
+}
+
+message MonitorPeerResponse {
+  Peer peer = 1;
+}
+
+message AddPeerGroupRequest {
+  PeerGroup peer_group = 1;
+}
+
+message DeletePeerGroupRequest {
+  string name = 1;
+}
+
+message UpdatePeerGroupRequest {
+  PeerGroup peer_group = 1;
+  bool do_soft_reset_in = 2;
+}
+
+message UpdatePeerGroupResponse {
+  bool needs_soft_reset_in = 1;
+}
+
+message AddDynamicNeighborRequest {
+  DynamicNeighbor dynamic_neighbor = 1;
 }
 
 message AddPathRequest {
@@ -141,79 +242,198 @@ message DeletePathRequest {
   bytes uuid = 5;
 }
 
-message DeletePathResponse {
+message ListPathRequest {
+  Resource type = 1;
+  string name = 2;
+  uint32 family = 3;
+  repeated TableLookupPrefix prefixes = 4;
 }
 
-message AddNeighborRequest {
-  Peer peer = 1;
+message ListPathResponse {
+  Destination destination = 1;
 }
 
-message AddNeighborResponse {
+message AddPathStreamRequest {
+  Resource resource = 1;
+  string vrf_id = 2;
+  repeated Path paths = 3;
 }
 
-message DeleteNeighborRequest {
-  Peer peer = 1;
+message GetTableRequest {
+  Resource type = 1;
+  uint32 family = 2;
+  string name = 3;
 }
 
-message DeleteNeighborResponse {
+message GetTableResponse {
+  uint64 num_destination = 4;
+  uint64 num_path = 5;
+  uint64 num_accepted = 6; // only meaningful when type == ADJ_IN
 }
 
-message UpdateNeighborRequest {
-  Peer peer = 1;
-  // Calls SoftResetIn after updating the neighbor configuration if needed.
-  bool do_soft_reset_in = 2;
+message MonitorTableRequest {
+  Resource type = 1;
+  string name = 2;
+  uint32 family = 3;
+  bool current = 4;
+  bool post_policy = 5;
 }
 
-message UpdateNeighborResponse {
-  // Indicates whether calling SoftResetIn is required due to this update. If
-  // "true" is set, the client should call SoftResetIn manually. If
-  // "do_soft_reset_in = true" is set in the request, always returned with
-  // "false".
-  bool needs_soft_reset_in = 1;
+message MonitorTableResponse {
+  Path path = 1;
 }
 
-message ResetNeighborRequest {
+message AddVrfRequest {
+  Vrf vrf = 1;
+}
+
+message DeleteVrfRequest {
+  string name = 1;
+}
+
+message ListVrfRequest {
+  string name = 1;
+}
+
+message ListVrfResponse {
+  Vrf vrf = 1;
+}
+
+message AddPolicyRequest {
+  Policy policy = 1;
+  // if this flag is set, gobgpd won't define new statements
+  // but refer existing statements using statement's names in this arguments.
+  bool refer_existing_statements = 2;
+}
+
+message DeletePolicyRequest {
+  Policy policy = 1;
+  // if this flag is set, gobgpd won't delete any statements
+  // even if some statements get not used by any policy by this operation.
+  bool preserve_statements = 2;
+  bool all = 3;
+}
+
+message ListPolicyRequest {
+  string name = 1;
+}
+
+message ListPolicyResponse {
+  Policy policy = 1;
+}
+
+message SetPoliciesRequest {
+  repeated DefinedSet defined_sets = 1;
+  repeated Policy policies = 2;
+  repeated PolicyAssignment assignments = 3;
+}
+
+message AddDefinedSetRequest {
+  DefinedSet defined_set = 1;
+}
+
+message DeleteDefinedSetRequest {
+  DefinedSet defined_set = 1;
+  bool all = 2;
+}
+
+message ListDefinedSetRequest {
+  DefinedType type = 1;
+  string name = 2;
+}
+
+message ListDefinedSetResponse {
+  DefinedSet defined_set = 1;
+}
+
+message AddStatementRequest {
+  Statement statement = 1;
+}
+
+message DeleteStatementRequest {
+  Statement statement = 1;
+  bool all = 2;
+}
+
+message ListStatementRequest {
+  string name = 1;
+}
+
+message ListStatementResponse {
+  Statement statement = 1;
+}
+
+message AddPolicyAssignmentRequest {
+  PolicyAssignment assignment = 1;
+}
+
+message DeletePolicyAssignmentRequest {
+  PolicyAssignment assignment = 1;
+  bool all = 2;
+}
+
+message ListPolicyAssignmentRequest {
+  string name = 1;
+  PolicyDirection direction = 2;
+}
+
+message ListPolicyAssignmentResponse {
+  PolicyAssignment assignment = 1;
+}
+
+message SetPolicyAssignmentRequest {
+  PolicyAssignment assignment = 1;
+}
+
+message AddRpkiRequest {
   string address = 1;
-  string communication = 2;
+  uint32 port = 2;
+  int64 lifetime = 3;
 }
 
-message ResetNeighborResponse {
-}
-
-message SoftResetNeighborRequest {
+message DeleteRpkiRequest {
   string address = 1;
-  enum SoftResetDirection {
-    IN = 0;
-    OUT = 1;
-    BOTH = 2;
-  }
-  SoftResetDirection direction = 2;
+  uint32 port = 2;
 }
 
-message SoftResetNeighborResponse {
+message ListRpkiRequest {
+  uint32 family = 1;
 }
 
-message ShutdownNeighborRequest {
+message ListRpkiResponse {
+  Rpki server = 1;
+}
+
+message EnableRpkiRequest {
   string address = 1;
-  string communication = 2;
+  uint32 port = 2;
 }
 
-message ShutdownNeighborResponse {
-}
-
-message EnableNeighborRequest {
+message DisableRpkiRequest {
   string address = 1;
+  uint32 port = 2;
 }
 
-message EnableNeighborResponse {
-}
-
-message DisableNeighborRequest {
+message ResetRpkiRequest {
   string address = 1;
-  string communication = 2;
+  uint32 port = 2;
+  bool soft = 3;
 }
 
-message DisableNeighborResponse {
+message ListRpkiTableRequest {
+  uint32 family = 1;
+}
+
+message ListRpkiTableResponse {
+  Roa roa = 1;
+}
+
+message EnableZebraRequest {
+  string url = 1;
+  repeated string route_types = 2;
+  uint32 version = 3;
+  bool nexthop_trigger_enable = 4;
+  uint32 nexthop_trigger_delay = 5;
 }
 
 message EnableMrtRequest {
@@ -222,22 +442,7 @@ message EnableMrtRequest {
   uint64 interval = 3;
 }
 
-message EnableMrtResponse {
-}
-
 message DisableMrtRequest {
-}
-
-message DisableMrtResponse {
-}
-
-message InjectMrtRequest {
-  Resource resource = 1;
-  string vrf_id = 2;
-  repeated Path paths = 3;
-}
-
-message InjectMrtResponse {
 }
 
 message AddBmpRequest {
@@ -253,286 +458,9 @@ message AddBmpRequest {
   MonitoringPolicy type = 3;
 }
 
-message AddBmpResponse {
-}
-
 message DeleteBmpRequest {
   string address = 1;
   uint32 port = 2;
-}
-
-message DeleteBmpResponse {
-}
-
-message MonitorRibRequest {
-    Table table = 1;
-    bool current = 2;
-}
-
-message RPKIConf {
-  string address = 1;
-  string remote_port = 2;
-}
-
-message RPKIState {
-  int64 uptime = 1;
-  int64 downtime = 2;
-  bool  up = 3;
-  uint32 record_ipv4 = 4;
-  uint32 record_ipv6 = 5;
-  uint32 prefix_ipv4 = 6;
-  uint32 prefix_ipv6 = 7;
-  uint32 serial = 8;
-  int64 received_ipv4 = 9;
-  int64 received_ipv6 = 10;
-  int64 serial_notify = 11;
-  int64 cache_reset = 12;
-  int64 cache_response = 13;
-  int64 end_of_data = 14;
-  int64 error = 15;
-  int64 serial_query = 16;
-  int64 reset_query = 17;
-}
-
-message Rpki {
-  RPKIConf conf = 1;
-  RPKIState state = 2;
-}
-
-message GetRpkiRequest {
-  uint32 family = 1;
-}
-
-message GetRpkiResponse {
-  repeated Rpki servers = 1;
-}
-
-message AddRpkiRequest {
-  string address = 1;
-  uint32 port = 2;
-  int64 lifetime = 3;
-}
-
-message AddRpkiResponse {
-}
-
-message DeleteRpkiRequest {
-  string address = 1;
-  uint32 port = 2;
-}
-
-message DeleteRpkiResponse {
-}
-
-message EnableRpkiRequest {
-  string address = 1;
-}
-
-message EnableRpkiResponse {
-}
-
-message DisableRpkiRequest {
-  string address = 1;
-}
-
-message DisableRpkiResponse {
-}
-
-message ResetRpkiRequest {
-  string address = 1;
-}
-
-message ResetRpkiResponse {
-}
-
-message SoftResetRpkiRequest {
-  string address = 1;
-}
-
-message SoftResetRpkiResponse {
-}
-
-message EnableZebraRequest {
-  string url = 1;
-  repeated string route_types = 2;
-  uint32 version = 3;
-  bool nexthop_trigger_enable = 4;
-  uint32 nexthop_trigger_delay = 5;
-}
-
-message EnableZebraResponse {
-}
-
-message GetVrfRequest {
-}
-
-message GetVrfResponse {
-  repeated Vrf vrfs = 1;
-}
-
-message AddVrfRequest {
-  Vrf vrf = 1;
-}
-
-message AddVrfResponse {
-}
-
-message DeleteVrfRequest {
-  Vrf vrf = 1;
-}
-
-message DeleteVrfResponse {
-}
-
-message GetDefinedSetRequest {
-  DefinedType type = 1;
-  string name = 2;
-}
-
-message GetDefinedSetResponse {
-  repeated DefinedSet sets = 1;
-}
-
-message AddDefinedSetRequest {
-  DefinedSet set = 1;
-}
-
-message AddDefinedSetResponse {
-}
-
-message DeleteDefinedSetRequest {
-  DefinedSet set = 1;
-  bool all = 2;
-}
-
-message DeleteDefinedSetResponse {
-}
-
-message ReplaceDefinedSetRequest {
-  DefinedSet set = 1;
-}
-
-message ReplaceDefinedSetResponse {
-}
-
-message GetStatementRequest {
-}
-
-message GetStatementResponse {
-  repeated Statement statements = 1;
-}
-
-message AddStatementRequest {
-  Statement statement = 1;
-}
-
-message AddStatementResponse {
-}
-
-message DeleteStatementRequest {
-  Statement statement = 1;
-  bool all = 2;
-}
-
-message DeleteStatementResponse {
-}
-
-message ReplaceStatementRequest {
-  Statement statement = 1;
-}
-
-message ReplaceStatementResponse {
-}
-
-message GetPolicyRequest {
-}
-
-message GetPolicyResponse {
-  repeated Policy policies = 1;
-}
-
-message AddPolicyRequest {
-  Policy policy = 1;
-  // if this flag is set, gobgpd won't define new statements
-  // but refer existing statements using statement's names in this arguments.
-  bool refer_existing_statements = 2;
-}
-
-message AddPolicyResponse {
-}
-
-message DeletePolicyRequest {
-  Policy policy = 1;
-  // if this flag is set, gobgpd won't delete any statements
-  // even if some statements get not used by any policy by this operation.
-  bool preserve_statements = 2;
-  bool all = 3;
-}
-
-message DeletePolicyResponse {
-}
-
-message ReplacePolicyRequest {
-  Policy policy = 1;
-  // if this flag is set, gobgpd won't define new statements
-  // but refer existing statements using statement's names in this arguments.
-  bool refer_existing_statements = 2;
-  // if this flag is set, gobgpd won't delete any statements
-  // even if some statements get not used by any policy by this operation.
-  bool preserve_statements = 3;
-}
-
-message ReplacePolicyResponse {
-}
-
-message GetPolicyAssignmentRequest {
-  PolicyAssignment assignment = 1;
-}
-
-message GetPolicyAssignmentResponse {
-  PolicyAssignment assignment = 1;
-}
-
-message AddPolicyAssignmentRequest {
-  PolicyAssignment assignment = 1;
-}
-
-message AddPolicyAssignmentResponse {
-}
-
-message DeletePolicyAssignmentRequest {
-  PolicyAssignment assignment = 1;
-  bool all = 2;
-}
-
-message DeletePolicyAssignmentResponse {
-}
-
-message ReplacePolicyAssignmentRequest {
-  PolicyAssignment assignment = 1;
-}
-
-message ReplacePolicyAssignmentResponse {
-}
-
-message GetServerRequest {
-}
-
-message GetServerResponse {
-  Global global = 1;
-}
-
-message StartServerRequest {
-  Global global = 1;
-}
-
-message StartServerResponse {
-}
-
-message StopServerRequest {
-}
-
-message StopServerResponse {
 }
 
 enum Resource {
@@ -584,29 +512,29 @@ message Path {
   bool is_nexthop_invalid = 17;
   uint32 identifier = 18;
   uint32 local_identifier = 19;
+  // One of the following defined in "api/attribute.proto":
+  // - IPAddressPrefix
+  // - LabeledIPAddressPrefix
+  // - EncapsulationNLRI
+  // - EVPNEthernetAutoDiscoveryRoute
+  // - EVPNMACIPAdvertisementRoute
+  // - EVPNInclusiveMulticastEthernetTagRoute
+  // - EVPNEthernetSegmentRoute
+  // - EVPNIPPrefixRoute
+  // - LabeledVPNIPAddressPrefix
+  // - RouteTargetMembershipNLRI
+  // - FlowSpecNLRI
+  // - VPNFlowSpecNLRI
+  // - OpaqueNLRI
+  google.protobuf.Any any_nlri = 20;
+  // Each attribute must be one of *Attribute defined in
+  // "api/attribute.proto".
+  repeated google.protobuf.Any any_pattrs = 21;
 }
 
 message Destination {
   string prefix = 1;
   repeated Path paths = 2;
-  bool longer_prefixes = 3;
-  bool shorter_prefixes = 4;
-}
-
-message Table {
-  Resource type = 1;
-  string name = 2;
-  uint32 family = 3;
-  repeated Destination destinations = 4;
-  bool post_policy = 5;
-}
-
-message GetRibRequest {
-  Table table = 1;
-}
-
-message GetRibResponse {
-  Table table = 1;
 }
 
 // API representation of table.LookupOption
@@ -622,22 +550,6 @@ message TableLookupPrefix {
   TableLookupOption lookup_option = 2;
 }
 
-message GetPathRequest {
-  Resource type = 1;
-  string name = 2;
-  uint32 family = 3;
-  repeated TableLookupPrefix prefixes = 4;
-}
-
-message ValidateRibRequest {
-  Resource type = 1;
-  uint32 family = 2;
-  string prefix = 3;
-}
-
-message ValidateRibResponse {
-}
-
 message Peer {
   // Note: Regarding to the consistency with OpenConfig model, a list of
   // address family should be removed from here, and should be configured with
@@ -647,13 +559,36 @@ message Peer {
   PeerConf conf = 3;
   EbgpMultihop ebgp_multihop = 4;
   RouteReflector route_reflector = 5;
-  PeerState info = 6;
+  PeerState state= 6;
   Timers timers = 7;
   Transport transport = 8;
   RouteServer route_server = 9;
   GracefulRestart graceful_restart = 10;
   repeated AfiSafi afi_safis = 11;
   AddPaths add_paths = 12;
+}
+
+message PeerGroup {
+  // Note: Regarding to the consistency with OpenConfig model, a list of
+  // address family should be removed from here, and should be configured with
+  // the list of AfiSafi instead.
+  repeated uint32 families = 1;
+  ApplyPolicy apply_policy = 2;
+  PeerGroupConf conf = 3;
+  EbgpMultihop ebgp_multihop = 4;
+  RouteReflector route_reflector = 5;
+  PeerGroupState info = 6;
+  Timers timers = 7;
+  Transport transport = 8;
+  RouteServer route_server = 9;
+  GracefulRestart graceful_restart = 10;
+  repeated AfiSafi afi_safis = 11;
+  AddPaths add_paths = 12;
+}
+
+message DynamicNeighbor {
+  string prefix = 1;
+  string peer_group = 2;
 }
 
 message ApplyPolicy {
@@ -684,8 +619,10 @@ message PeerConf {
   RemovePrivateAs remove_private_as = 8;
   bool route_flap_damping = 9;
   uint32 send_community = 10;
-  repeated bytes remote_cap = 11;
-  repeated bytes local_cap = 12;
+  // Each attribute must be one of *Capability defined in
+  // "api/capability.proto".
+  repeated google.protobuf.Any remote_cap = 11;
+  repeated google.protobuf.Any local_cap = 12;
   string id = 13;
   // Note: Regarding to the consistency with OpenConfig model, list of
   // PrefixLimit should be removed from here, and list of PrefixLimit in
@@ -696,6 +633,42 @@ message PeerConf {
   string vrf = 17;
   uint32 allow_own_as = 18;
   bool replace_peer_as = 19;
+}
+
+message PeerGroupConf {
+  string auth_password = 1;
+  string description = 2;
+  uint32 local_as = 3;
+  uint32 peer_as = 5;
+  string peer_group_name = 6;
+  uint32 peer_type = 7;
+  enum RemovePrivateAs {
+      NONE = 0;
+      ALL = 1;
+      REPLACE = 2;
+  }
+  RemovePrivateAs remove_private_as = 8;
+  bool route_flap_damping = 9;
+  uint32 send_community = 10;
+}
+
+message PeerGroupState {
+  string auth_password = 1;
+  string description = 2;
+  uint32 local_as = 3;
+  uint32 peer_as = 5;
+  string peer_group_name = 6;
+  uint32 peer_type = 7;
+  enum RemovePrivateAs {
+      NONE = 0;
+      ALL = 1;
+      REPLACE = 2;
+  }
+  RemovePrivateAs remove_private_as = 8;
+  bool route_flap_damping = 9;
+  uint32 send_community = 10;
+  uint32 total_paths = 11;
+  uint32 total_prefixes = 12;
 }
 
 message EbgpMultihop {
@@ -721,20 +694,28 @@ message PeerState {
   uint32 remove_private_as = 10;
   bool route_flap_damping = 11;
   uint32 send_community = 12;
-  uint32 session_state = 13;
+  enum SessionState {
+    UNKNOWN = 0;
+    IDLE = 1;
+    CONNECT = 2;
+    ACTIVE = 3;
+    OPENSENT = 4;
+    OPENCONFIRM = 5;
+    ESTABLISHED = 6;
+  }
+  SessionState session_state = 13;
   repeated string supported_capabilities = 14;
-  string bgp_state = 15;
   enum AdminState {
       UP = 0;
       DOWN = 1;
       PFX_CT = 2; // prefix counter over limit
   }
-  AdminState admin_state = 16;
-  uint32 received = 17;
-  uint32 accepted = 18;
-  uint32 advertised = 19;
-  uint32 out_q = 20;
-  uint32 flops = 21;
+  AdminState admin_state = 15;
+  uint32 received = 16;
+  uint32 accepted = 17;
+  uint32 advertised = 18;
+  uint32 out_q = 19;
+  uint32 flops = 20;
 }
 
 message Messages {
@@ -743,13 +724,13 @@ message Messages {
 }
 
 message Message {
-  uint64 NOTIFICATION = 1;
-  uint64 UPDATE = 2;
-  uint64 OPEN = 3;
-  uint64 KEEPALIVE = 4;
-  uint64 REFRESH = 5;
-  uint64 DISCARDED = 6;
-  uint64 TOTAL = 7;
+  uint64 notification = 1;
+  uint64 update = 2;
+  uint64 open = 3;
+  uint64 keepalive = 4;
+  uint64 refresh = 5;
+  uint64 discarded = 6;
+  uint64 total = 7;
 }
 
 message Queues {
@@ -800,6 +781,11 @@ message GracefulRestart {
   uint32 deferral_time = 4;
   bool notification_enabled = 5;
   bool longlived_enabled = 6;
+  uint32 stale_routes_time = 7;
+  uint32 peer_restart_time = 8;
+  bool peer_restarting = 9;
+  bool local_restarting = 10;
+  string mode = 11;
 }
 
 message MpGracefulRestartConfig {
@@ -837,6 +823,7 @@ message RouteSelectionOptionsConfig {
   bool advertise_inactive_routes = 4;
   bool enable_aigp = 5;
   bool ignore_next_hop_igp_metric = 6;
+  bool disable_best_path_selection = 7;
 }
 
 message RouteSelectionOptionsState {
@@ -846,6 +833,7 @@ message RouteSelectionOptionsState {
   bool advertise_inactive_routes = 4;
   bool enable_aigp = 5;
   bool ignore_next_hop_igp_metric = 6;
+  bool disable_best_path_selection = 7;
 }
 
 message RouteSelectionOptions {
@@ -1029,6 +1017,7 @@ message Conditions {
   RouteType route_type = 8;
   MatchSet large_community_set = 9;
   repeated string next_hop_in_list = 10;
+  repeated Family afi_safi_in = 11;
 }
 
 enum RouteAction {
@@ -1095,18 +1084,22 @@ message Policy {
   repeated Statement statements = 2;
 }
 
-enum PolicyType {
-  IN = 0;
+enum PolicyDirection {
+  UNKNOWN = 0;
   IMPORT = 1;
   EXPORT = 2;
 }
 
 message PolicyAssignment {
-  PolicyType type = 1;
-  Resource resource = 2;
-  string name = 3;
+  string name = 1;
+  PolicyDirection direction = 2;
   repeated Policy policies = 4;
-  RouteAction default = 5;
+  RouteAction default_action = 5;
+}
+
+message RoutingPolicy {
+  repeated DefinedSet defined_sets = 1;
+  repeated Policy policies = 2;
 }
 
 message Roa {
@@ -1117,20 +1110,29 @@ message Roa {
   RPKIConf conf = 5;
 }
 
-message GetRoaRequest {
-  uint32 family = 1;
-}
-
-message GetRoaResponse {
-  repeated Roa roas = 1;
-}
-
 message Vrf {
   string name = 1;
-  bytes rd = 2;
-  repeated bytes import_rt = 3;
-  repeated bytes export_rt = 4;
+  // Route Distinguisher must be one of
+  // RouteDistinguisherTwoOctetAS,
+  // RouteDistinguisherIPAddressAS,
+  // or RouteDistinguisherFourOctetAS.
+  google.protobuf.Any rd = 2;
+  // List of the Import Route Targets. Each must be one of
+  // TwoOctetAsSpecificExtended,
+  // IPv4AddressSpecificExtended,
+  // or FourOctetAsSpecificExtended.
+  repeated google.protobuf.Any import_rt = 3;
+  // List of the Export Route Targets. Each must be one of
+  // TwoOctetAsSpecificExtended,
+  // IPv4AddressSpecificExtended,
+  // or FourOctetAsSpecificExtended.
+  repeated google.protobuf.Any export_rt = 4;
   uint32 id = 5;
+}
+
+message DefaultRouteDistance {
+  uint32 external_route_distance = 1;
+  uint32 internal_route_distance = 2;
 }
 
 message Global {
@@ -1140,21 +1142,45 @@ message Global {
   repeated string listen_addresses = 4;
   repeated uint32 families = 5;
   bool use_multiple_paths = 6;
+  RouteSelectionOptionsConfig route_selection_options = 7;
+  DefaultRouteDistance default_route_distance = 8;
+  Confederation confederation = 9;
+  GracefulRestart graceful_restart = 10;
+  ApplyPolicy apply_policy = 11;
 }
 
-message TableInfo {
-  Resource type = 1;
-  string name = 2;
-  uint32 family = 3;
-  uint64 num_destination = 4;
-  uint64 num_path = 5;
-  uint64 num_accepted = 6; // only meaningful when type == ADJ_IN
+message Confederation {
+  bool enabled = 1;
+  uint32 identifier = 2;
+  repeated uint32 member_as_list = 3;
 }
 
-message GetRibInfoRequest {
-    TableInfo info  = 1;
+message RPKIConf {
+  string address = 1;
+  uint32 remote_port = 2;
 }
 
-message GetRibInfoResponse {
-    TableInfo info = 1;
+message RPKIState {
+  int64 uptime = 1;
+  int64 downtime = 2;
+  bool  up = 3;
+  uint32 record_ipv4 = 4;
+  uint32 record_ipv6 = 5;
+  uint32 prefix_ipv4 = 6;
+  uint32 prefix_ipv6 = 7;
+  uint32 serial = 8;
+  int64 received_ipv4 = 9;
+  int64 received_ipv6 = 10;
+  int64 serial_notify = 11;
+  int64 cache_reset = 12;
+  int64 cache_response = 13;
+  int64 end_of_data = 14;
+  int64 error = 15;
+  int64 serial_query = 16;
+  int64 reset_query = 17;
+}
+
+message Rpki {
+  RPKIConf conf = 1;
+  RPKIState state = 2;
 }
